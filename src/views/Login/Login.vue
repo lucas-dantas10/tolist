@@ -2,6 +2,8 @@
 import { ref } from 'vue';
 import store from '../../store';
 
+const errorMsg = ref('');
+
 const forms = ref({
     email: '',
     password: '',
@@ -9,8 +11,21 @@ const forms = ref({
 });
 
 function submit() {
-    store.dispatch('login')
-        .then(res => console.log(res))
+    store.dispatch('login', forms.value)
+        .then(({data}) => {
+            console.log(data);
+            store.commit('showToast', {
+                message: 'Logado com sucesso',
+                type: 'success'
+            })
+        })
+        .catch(({response}) => {
+            errorMsg.value = response.data.message;
+            store.commit('showToast', {
+                message: errorMsg.value,
+                type: 'error'
+            })
+        })
 }
 
 </script>
