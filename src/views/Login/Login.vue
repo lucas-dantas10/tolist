@@ -13,11 +13,7 @@ const forms = ref({
 function submit() {
     store.dispatch('login', forms.value)
         .then(({data}) => {
-            console.log(data);
-            store.commit('showToast', {
-                message: 'Logado com sucesso',
-                type: 'success'
-            })
+            return;
         })
         .catch(({response}) => {
             errorMsg.value = response.data.message;
@@ -46,8 +42,8 @@ function submit() {
                     <div class="bg-gray-400 rounded-md p-6">
                         <span class="font-bold text-lg">Demo User</span>
                         <div class="font-semibold">
-                            <p>email: user@example.com</p>
-                            <p>senha: user1user1</p>
+                            <p>email: user1@example.com</p>
+                            <p>senha: user123</p>
                         </div>
                     </div>
                     <form @submit.prevent="submit" class="space-y-4 md:space-y-6">
