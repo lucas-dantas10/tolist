@@ -2,37 +2,57 @@ import { createWebHistory, createRouter } from 'vue-router';
 import AppLayout from '../components/Layouts/AppLayout/AppLayout.vue';
 import Login from '../views/Login/Login.vue';
 import Register from '../views/Register/Register.vue';
+import store from '../store';
+import Home from '../views/Home/Home.vue';
 
 const routes = [
     {
         path: '/',
-        redirect: '/login'
+        name: 'app',
+        component: AppLayout,
+        meta: {
+            requiresAuth: true
+        },
+        children: [
+            {
+                path: '/home',
+                name: 'app.home',
+                component: Home
+            }
+        ]
     },
+
     {
         path: '/login',
         name: 'login',
-        component: Login
+        component: Login,
+        meta: {
+            requiresGuest: true
+        },
     },
     {
         path: '/register',
         name: 'register',
-        component: Register
+        component: Register,
+        meta: {
+            requiresGuest: true
+        },
     },
-    {
-        path: '/',
-        component: AppLayout,
-        // children: [
-        //     {
-        //         path: '/login',
-        //         component: Login
-        //     }
-        // ]
-    }
 ];
 
 const router = createRouter({
     history: createWebHistory(),
     routes
 });
+
+// router.beforeEach((to, from, next) => {
+//     if (to.meta.requiresAuth && !store.state.user.token) {
+//         next({name: 'login'});
+//     } else if (to.meta.requiresGuest && store.state.user.token) {
+//         next({name: 'app.home'});
+//     } else {
+//         next();
+//     }
+// });
 
 export default router;
