@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import store from '../../store';
+import router from '../../router/index.js';
 
 const errorMsg = ref('');
 
@@ -13,7 +14,7 @@ const forms = ref({
 function submit() {
     store.dispatch('login', forms.value)
         .then(({data}) => {
-            return;
+            router.push({name: 'app.home'});
         })
         .catch(({response}) => {
             errorMsg.value = response.data.message;
