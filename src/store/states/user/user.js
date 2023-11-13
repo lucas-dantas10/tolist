@@ -1,7 +1,6 @@
 const user = {
-    id: '',
-    nome: '',
-    status: ''
+    token: sessionStorage.getItem('TOKEN'),
+    data: {}
 }
 
 export default user;
