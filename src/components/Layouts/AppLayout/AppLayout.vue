@@ -1,13 +1,18 @@
 <script setup>
+import { onMounted } from 'vue';
 import Sidebar from '../../Sidebar/Sidebar.vue';
+import store from '../../../store';
+
+onMounted(() => {
+    store.dispatch('getCurrentUser');
+});
 </script>
 
 <template>
     <div>
         <Sidebar />
         <main class="p-4 sm:ml-64">
-            <h1>teste</h1>
-            <!-- <router-view></router-view> -->
+            <router-view></router-view>
         </main>
     </div>
 </template>
