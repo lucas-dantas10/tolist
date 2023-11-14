@@ -1,3 +1,21 @@
+<script setup>
+import { computed, onMounted, ref } from 'vue';
+import DropdownSearch from '../../components/DropdownSearch/DropdownSearch.vue';
+import Dropdown from '../../components/Dropdown/Dropdown.vue';
+import store from '../../store';
+
+const tasks = computed(() => store.state.tasks.data);
+
+onMounted(() => {
+    getTasks();
+});
+
+function getTasks() {
+    store.dispatch('getTasks');
+}
+
+</script>
+
 <template>
     <div>
         <form class="flex flex-col items-start gap-2 mb-8 lg:flex-row lg:items-center lg:justify-between">
@@ -5,28 +23,15 @@
                 <input
                     type="text"
                     placeholder="Filtro tarefas..."
-                    class="border border-gray-200 rounded-lg px-2 py-1"
+                    class="border border-gray-200 rounded-lg px-2 py-1 focus:outline-gray-200"
                 />
 
-                <button
-                    class="border border-dotted text-sm border-gray-400 rounded-lg px-4 py-1 hover:bg-gray-200 transition-colors"
-                >
-                    <v-icon name="bi-plus-circle" fill="black" />
-                    Status
-                </button>
+                <DropdownSearch title="Status" icon="bi-plus-circle" :items="[{title: 'Em progresso', model: 'progress'},]" />
 
-                <button
-                    class="border border-dotted text-sm border-gray-400 rounded-lg px-4 py-1 hover:bg-gray-200 transition-colors"
-                >
-                    <v-icon name="bi-plus-circle" fill="black" />
-                    Prioridade
-                </button>
+                <DropdownSearch title="Prioridade" icon="bi-plus-circle" :items="[{title: 'Alta', model: 'progress'},]" />
             </div>
 
-            <button class="border border-gray-300 text-sm rounded-lg px-4 py-1 hover:bg-gray-200 transition-colors">
-                <v-icon name="bi-arrow-down-up" fill="black" />
-                View
-            </button>
+            <DropdownSearch title="View" icon="bi-arrow-down-up" margin-inline="-9.5" :items="[{title: 'Title', model: 'progress'}, {title: 'Status'}]" />
 
             <button
                 type="submit"
@@ -44,30 +49,38 @@
                         <th scope="col" class="px-6 py-3">Title</th>
                         <th scope="col" class="px-6 py-3">Status</th>
                         <th scope="col" class="px-6 py-3">Prioridade</th>
+                        <th scope="col" class="px-6 py-3">Ações</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="bg-white border-b border-gray-50 text-gray-900">
+
+                <tbody v-if="tasks.length == 0">
+                    <h2 class="p-6">Não possui tarefas</h2>
+                </tbody>
+                <tbody v-else>
+                    <tr v-for="(task, i) in tasks" :key="i" class="bg-white border-b border-gray-50 text-gray-900">
                         <th
                             scope="row"
                             class="px-6 py-4 font-medium whitespace-nowrap"
                         >  
                             <div class="flex items-center gap-2">
                                 <input type="checkbox" id="myCheckbox" class="form-checkbox w-4 h-4 rounded-md text-indigo-600 checked:bg-gray-900:rounded-md">
-                                Academy
+                                {{task.title}}
                             </div>                            
                         </th>
                         <td class="px-6 py-4">
-                            <span class="border border-gray-200 px-2 py-1 rounded-md mr-2">Academia</span>
-                            Fazer academia
+                            <span class="border border-gray-200 px-2 py-1 rounded-md mr-2">{{task.category.name}}</span>
+                            {{task.description}}
                         </td>
                         <td class="px-6 py-4">
-                            <v-icon name="co-clock" fill="black" />
-                            Em progresso
+                            <v-icon :name="task.status.icon" fill="black" />
+                            {{task.status.type}}
                         </td>
                         <td class="px-6 py-4">
-                            <v-icon name="bi-arrow-up" fill="black" />
-                            Alta
+                            <v-icon :name="task.priority.icon" fill="black" />
+                            {{task.priority.type}}
+                        </td>
+                        <td class="px-6 py-4">
+                            <Dropdown icon="bi-three-dots" :items="[{title: 'Editar'}, {title: 'Deletar'}]" />
                         </td>
                     </tr>
                 </tbody>
