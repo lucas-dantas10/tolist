@@ -5,13 +5,19 @@ import Dropdown from '../../components/Dropdown/Dropdown.vue';
 import store from '../../store';
 
 const tasks = computed(() => store.state.tasks.data);
+const status = computed(() => store.state.status.data);
 
 onMounted(() => {
     getTasks();
+    getStatus();
 });
 
 function getTasks() {
     store.dispatch('getTasks');
+}
+
+function getStatus() {
+    store.dispatch('getStatus');
 }
 
 </script>
@@ -26,9 +32,9 @@ function getTasks() {
                     class="border border-gray-200 rounded-lg px-2 py-1 focus:outline-gray-200"
                 />
 
-                <DropdownSearch title="Status" icon="bi-plus-circle" :items="[{title: 'Em progresso', model: 'progress'},]" />
+                <DropdownSearch title="Status" icon="bi-plus-circle" :items="status" />
 
-                <DropdownSearch title="Prioridade" icon="bi-plus-circle" :items="[{title: 'Alta', model: 'progress'},]" />
+                <DropdownSearch title="Prioridade" icon="bi-plus-circle" :items="[{type: 'Alta'}, {type: 'Média'}, {type: 'Baixa'},]" />
             </div>
 
             <DropdownSearch title="View" icon="bi-arrow-down-up" margin-inline="-9.5" :items="[{title: 'Title', model: 'progress'}, {title: 'Status'}]" />

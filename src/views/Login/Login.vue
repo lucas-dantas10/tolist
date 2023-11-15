@@ -1,7 +1,8 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import store from '../../store';
 import router from '../../router/index.js';
+import Spinner from '../../components/Spinner/Spinner.vue';
 
 const errorMsg = ref('');
 
@@ -11,9 +12,12 @@ const forms = ref({
     remember: false,
 });
 
+const spinner = computed(() => store.state.spinner);
+
 function submit() {
     store.dispatch('login', forms.value)
         .then(({data}) => {
+            spinner.value.loading = true;
             router.push({name: 'app.home'});
         })
         .catch(({response}) => {
@@ -23,6 +27,7 @@ function submit() {
                 type: 'error'
             })
         })
+        .finally(() => spinner.value.loading = false);
 }
 
 </script>
@@ -103,9 +108,10 @@ function submit() {
                         </div>
                         <button
                             type="submit"
-                            class="w-full text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                            class="w-full flex items-center justify-center gap-2 text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                         >
-                            Entrar
+                            {{ spinner.loading == false ? 'Entrar' : 'Verificando...' }}
+                            <Spinner />
                         </button>
                         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                             Você não tem conta ainda?
