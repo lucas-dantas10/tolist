@@ -5,10 +5,13 @@ const dropdown = ref(null);
 const isOpen = ref(false);
 const props = defineProps({
     title: String,
-    items: Array,
+    items: Object,
     icon: String,
-    marginInline: String
-})
+    marginInline: String,
+});
+const emit = defineEmits([
+    'checked'
+]);
 
 onMounted(() => {
     dropdown.value.focus();
@@ -33,8 +36,6 @@ function handleOutsideClick(event) {
         document.removeEventListener('click', handleOutsideClick);
     }
 }
-
-
 </script>
 
 <template>
@@ -88,15 +89,16 @@ function handleOutsideClick(event) {
                 <li v-for="(item, i) in items" :key="i">
                     <div class="flex items-center ps-2 rounded hover:bg-gray-200">
                         <input
-                            id="checkbox-item-11"
+                            :id="item.type"
                             type="checkbox"
-                            value=""
+                            @click="emit('checked', item)"
+                            v-model="item.isCheck"
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                         />
                         <label
-                            for="checkbox-item-11"
+                            :for="item.type"
                             class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded"
-                            >{{ item.title }}</label
+                            >{{ item.type }}</label
                         >
                     </div>
                 </li>
