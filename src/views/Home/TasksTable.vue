@@ -6,25 +6,61 @@ import store from '../../store';
 
 const tasks = computed(() => store.state.tasks.data);
 const status = computed(() => store.state.status.data);
+const priorities = computed(() => store.state.priority.data);
+
+const search = ref('');
+const perPage = ref(10);
+const sortField = ref('title');
+const sortDirection = ref('asc');
+const priorityId = ref(1);
+const statusId = ref(1);
 
 onMounted(() => {
     getTasks();
     getStatus();
+    getPriority();
 });
 
-function getTasks() {
-    store.dispatch('getTasks');
+function getTasks(url = null) {
+    store.dispatch('getTasks', {
+        url,
+        search: search.value,
+        per_page: perPage.value,
+        sort_field: sortField.value,
+        sort_direction: sortDirection.value,
+        status: statusId.value,
+        priority: priorityId.value,
+    });
 }
 
 function getStatus() {
     store.dispatch('getStatus');
 }
 
+function getPriority() {
+    store.dispatch('getPriority');
+}
+
+function filter(item) {
+    if (store.state.status.options.includes(item.type)) {
+        statusId.value = item.id;
+        getTasks();
+    }
+
+    if (store.state.priority.options.includes(item.type)) {
+        priorityId.value = item.id;
+        getTasks();
+    }
+
+    getTasks();
+    
+}
+
 </script>
 
 <template>
     <div>
-        <form class="flex flex-col items-start gap-2 mb-8 lg:flex-row lg:items-center lg:justify-between">
+        <form @submit.prevent="filter()" class="flex flex-col items-start gap-2 mb-8 lg:flex-row lg:items-center lg:justify-between">
             <div class="flex flex-col items-start gap-2 lg:flex-row lg:items-center">
                 <input
                     type="text"
@@ -32,9 +68,9 @@ function getStatus() {
                     class="border border-gray-200 rounded-lg px-2 py-1 focus:outline-gray-200"
                 />
 
-                <DropdownSearch title="Status" icon="bi-plus-circle" :items="status" />
+                <DropdownSearch title="Status" icon="bi-plus-circle" :items="status" @checked="filter" />
 
-                <DropdownSearch title="Prioridade" icon="bi-plus-circle" :items="[{type: 'Alta'}, {type: 'Média'}, {type: 'Baixa'},]" />
+                <DropdownSearch title="Prioridade" icon="bi-plus-circle" :items="priorities" @checked="filter" />
             </div>
 
             <DropdownSearch title="View" icon="bi-arrow-down-up" margin-inline="-9.5" :items="[{title: 'Title', model: 'progress'}, {title: 'Status'}]" />
