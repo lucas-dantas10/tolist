@@ -12,8 +12,8 @@ const search = ref('');
 const perPage = ref(10);
 const sortField = ref('title');
 const sortDirection = ref('asc');
-const priorityId = ref(1);
-const statusId = ref(1);
+const priorityId = ref(0);
+const statusId = ref(0);
 
 onMounted(() => {
     getTasks();
@@ -42,16 +42,20 @@ function getPriority() {
 }
 
 function filter(item) {
-    if (store.state.status.options.includes(item.type)) {
+    if (store.state.status.options.includes(item.type) && !item.isCheck) {
         statusId.value = item.id;
         getTasks();
+        return;
     }
 
-    if (store.state.priority.options.includes(item.type)) {
+    if (store.state.priority.options.includes(item.type) && !item.isCheck) {
         priorityId.value = item.id;
         getTasks();
+        return;
     }
 
+    statusId.value = 0;
+    priorityId.value = 0;
     getTasks();
     
 }
