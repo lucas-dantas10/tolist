@@ -6,7 +6,7 @@ const status = {
         'Em progresso',
         'Feito',
         'Cancelado',
-    ]
+    ],
 };
 
 export default status;
