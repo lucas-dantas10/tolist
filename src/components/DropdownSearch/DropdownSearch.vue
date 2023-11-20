@@ -53,7 +53,7 @@ function handleOutsideClick(event) {
         <!-- Dropdown menu -->
         <div id="dropdownSearch" ref="dropdown" :class="`mx-[${props.marginInline}rem]`" class="z-10 mt-[20rem] hidden bg-white rounded-lg shadow w-60 fixed">
             <div class="p-3">
-                <label for="input-group-search" class="sr-only">Search</label>
+                <label class="sr-only">Search</label>
                 <div class="relative">
                     <div
                         class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none"
@@ -76,7 +76,6 @@ function handleOutsideClick(event) {
                     </div>
                     <input
                         type="text"
-                        id="input-group-search"
                         class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Search..."
                     />
@@ -87,7 +86,7 @@ function handleOutsideClick(event) {
                 aria-labelledby="dropdownSearchButton"
             >
                 <li v-for="(item, i) in items" :key="i">
-                    <div class="flex items-center ps-2 rounded hover:bg-gray-200">
+                    <div class="flex items-center justify-between ps-2 rounded hover:bg-gray-200">
                         <input
                             :id="item.type"
                             type="checkbox"
@@ -100,6 +99,14 @@ function handleOutsideClick(event) {
                             class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded"
                             >{{ item.type }}</label
                         >
+
+                        <div>
+                            <p v-if="item.type == 'Fazer'" class="text-black px-2">{{ item.amountToDo }}</p>
+                            <p v-else-if="item.type == 'Em Progresso'" class="text-black px-2">{{ item.amountInProgress }}</p>
+                            <p v-else-if="item.type == 'Feito'" class="text-black px-2">{{ item.amountDone }}</p>
+                            <p v-else="item.type == 'Cancelado'" class="text-black px-2">{{ item.amountCanceled }}</p>
+                        </div>
+                        
                     </div>
                 </li>
             </ul>
