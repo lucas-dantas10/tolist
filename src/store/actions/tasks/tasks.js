@@ -1,3 +1,4 @@
+import store from '../..';
 import axiosClient from '../../../axios';
 
 export function getTasks({commit}, { url = null, search = '', per_page = 10, sort_field = 'title', sort_direction = 'asc', status, priority } = {}) {
@@ -13,4 +14,14 @@ export function getTasks({commit}, { url = null, search = '', per_page = 10, sor
             commit('setTasks', data.tasks);
         })
 
+}
+
+export function deleteTask({commit}, idTask) {
+    return axiosClient.delete(`/task/${idTask}`)
+        .then(({data}) => {
+            store.commit('showToast', {
+                message: data.message,
+                type: 'success'
+            });
+        });
 }
