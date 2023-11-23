@@ -17,6 +17,25 @@ onMounted(() => {
     dropdown.value.focus();
 });
 
+function displayAmount(item) {
+    switch (item.type) {
+        case 'Fazer':
+            return item.amountToDo;
+        case 'Em progresso':
+            return item.amountInProgress;
+        case 'Feito':
+            return item.amountDone;
+        case 'Alta':
+            return item.amountHigh;
+        case 'Média':
+            return item.amountAverage;
+        case 'Baixa':
+            return item.amountLow;
+        default:
+            return item.amountCanceled;
+    }
+}
+
 function openDropdown() {
     dropdown.value.classList.toggle("hidden");
     isOpen.value = true;
@@ -51,8 +70,8 @@ function handleOutsideClick(event) {
         </button>
 
         <!-- Dropdown menu -->
-        <div id="dropdownSearch" ref="dropdown" :class="`mx-[${props.marginInline}rem]`" class="z-10 mt-[20rem] hidden bg-white rounded-lg shadow w-60 fixed">
-            <div class="p-3">
+        <div id="dropdownSearch" ref="dropdown" :class="`me-[${props.marginInline}rem]`" class="z-10 mt-[20rem] hidden bg-white rounded-lg shadow w-60 fixed">
+            <div class="p-2 border-b border-gray-200">
                 <label class="sr-only">Search</label>
                 <div class="relative">
                     <div
@@ -76,7 +95,7 @@ function handleOutsideClick(event) {
                     </div>
                     <input
                         type="text"
-                        class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                        class="block w-full p-2 ps-10 text-sm text-gray-900 rounded-lg active:outline-none focus:outline-none"
                         placeholder="Search..."
                     />
                 </div>
@@ -101,10 +120,7 @@ function handleOutsideClick(event) {
                         >
 
                         <div>
-                            <p v-if="item.type == 'Fazer'" class="text-black px-2">{{ item.amountToDo }}</p>
-                            <p v-else-if="item.type == 'Em Progresso'" class="text-black px-2">{{ item.amountInProgress }}</p>
-                            <p v-else-if="item.type == 'Feito'" class="text-black px-2">{{ item.amountDone }}</p>
-                            <p v-else="item.type == 'Cancelado'" class="text-black px-2">{{ item.amountCanceled }}</p>
+                            <p class="text-black px-2">{{ displayAmount(item) }}</p>
                         </div>
                         
                     </div>

@@ -5,7 +5,8 @@ const dropdown = ref(null);
 const props = defineProps({
     icon: String,
     items: Array,
-})
+});
+const emit = defineEmits(['action']);
 
 onMounted(() => {
     dropdown.value.focus();
@@ -46,7 +47,7 @@ function actionTask(item) {
     >
         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
             <li v-for="(item, i) in props.items" :key="i">
-                <a href="#" @click="actionTask(item)" class="block px-4 py-2 hover:bg-gray-100 text-black"
+                <a href="#" @click="emit('action', {type: item.title, task: item.task})" class="block px-4 py-2 hover:bg-gray-100 text-black"
                     >{{item.title}}</a
                 >
             </li>

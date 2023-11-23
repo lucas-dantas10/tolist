@@ -25,7 +25,7 @@ function submit() {
             store.commit('showToast', {
                 message: errorMsg.value,
                 type: 'error'
-            })
+            });
         })
         .finally(() => spinner.value.loading = false);
 }
