@@ -3,6 +3,7 @@ import { setUser, setToken } from "./mutations/user/user";
 import { setTasks } from "./mutations/tasks/tasks";
 import { setStatus } from "./mutations/status/status";
 import { setPriority } from "./mutations/priority/priority";
+import { setCategory } from "./mutations/category/category";
 
 export default {
     hideToast,
@@ -11,5 +12,6 @@ export default {
     setToken,
     setTasks,
     setStatus,
-    setPriority
+    setPriority,
+    setCategory,
 }
