@@ -43,7 +43,7 @@ function actionTask(item) {
     <div
         id="dropdown"
         ref="dropdown"
-        class="z-10 hidden mt-2 mr-8 fixed bg-white divide-y divide-gray-100 rounded-lg shadow w-20"
+        class="z-[9998] hidden mt-2 mr-8 fixed bg-white divide-y divide-gray-100 rounded-lg shadow w-20 animate-fade-in-down"
     >
         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
             <li v-for="(item, i) in props.items" :key="i">
