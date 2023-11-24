@@ -8,14 +8,14 @@ import { OhVueIcon, addIcons } from "oh-vue-icons";
 import { 
     CoClock, BiPlusCircle, BiArrowRight, BiArrowDown, 
     BiCircle, BiCheck2Circle, BiArrowDownUp, BiArrowUp, FaTasks, LaClipboardListSolid,
-    BiListStars, RiSettings4Line, BiArrowBarLeft, BiThreeDots, IoCloseOutline
+    BiListStars, RiSettings4Line, BiArrowBarLeft, BiThreeDots, IoCloseOutline, MdCancelOutlined
 } 
 from "oh-vue-icons/icons";
 
 addIcons(
     CoClock, BiPlusCircle, BiArrowRight, BiArrowDown,BiArrowUp,
     BiCircle, BiCheck2Circle, BiArrowDownUp, FaTasks, LaClipboardListSolid,
-    BiListStars, RiSettings4Line, BiArrowBarLeft, BiThreeDots, IoCloseOutline
+    BiListStars, RiSettings4Line, BiArrowBarLeft, BiThreeDots, IoCloseOutline, MdCancelOutlined
 );
 
 const app = createApp(App);
