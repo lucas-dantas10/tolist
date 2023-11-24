@@ -4,6 +4,7 @@ import tasks from "./states/tasks/tasks";
 import status from "./states/status/status";
 import spinner from "./states/spinner/spinner";
 import priority from "./states/priority/priority";
+import category from "./states/category/category";
 
 export default {
     user,
@@ -12,4 +13,5 @@ export default {
     status,
     spinner,
     priority,
+    category,
 }
