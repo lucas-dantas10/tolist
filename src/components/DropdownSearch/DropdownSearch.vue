@@ -2,6 +2,7 @@
 import { onMounted, ref } from "vue";
 
 const dropdown = ref(null);
+const btn = ref(null);
 const isOpen = ref(false);
 const props = defineProps({
     title: String,
@@ -9,12 +10,11 @@ const props = defineProps({
     icon: String,
     marginInline: String,
 });
-const emit = defineEmits([
-    'checked'
-]);
+const emit = defineEmits(['checked']);
 
 onMounted(() => {
     dropdown.value.focus();
+    btn.value.focus();
 });
 
 function displayAmount(item) {
@@ -54,6 +54,10 @@ function handleOutsideClick(event) {
         dropdown.value.classList.add('hidden');
         document.removeEventListener('click', handleOutsideClick);
     }
+
+    if (!isOpen.value && btn.value.contains(event.target)) {
+        openDropdown();
+    }
 }
 </script>
 
@@ -62,6 +66,7 @@ function handleOutsideClick(event) {
         <button
             id="dropdownSearchButton"
             @click="openDropdown()"
+            ref="btn"
             class="border border-dotted text-sm border-gray-400 rounded-lg px-4 py-1 hover:bg-gray-200 transition-colors"
             type="button"
         >
@@ -70,7 +75,7 @@ function handleOutsideClick(event) {
         </button>
 
         <!-- Dropdown menu -->
-        <div id="dropdownSearch" ref="dropdown" :class="`me-[${props.marginInline}rem]`" class="z-10 mt-[20rem] hidden bg-white rounded-lg shadow w-60 fixed">
+        <div id="dropdownSearch" ref="dropdown" :style="{'margin-inline': `${props.marginInline}rem`}" class="z-10 mt-[20rem] hidden bg-white rounded-lg shadow w-60 fixed animate-fade-in-down">
             <div class="p-2 border-b border-gray-200">
                 <label class="sr-only">Search</label>
                 <div class="relative">
