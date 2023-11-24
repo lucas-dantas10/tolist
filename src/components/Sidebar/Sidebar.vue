@@ -3,7 +3,7 @@ import { ref } from 'vue';
 
 const menus = ref([
     { name: 'Tarefas', link: '/home', icon: 'fa-tasks', color: 'blue' },
-    { name: 'Cadastro Tarefas', link: '/', icon: 'la-clipboard-list-solid', color: 'green' },
+    { name: 'Cadastro Tarefas', link: '/cadastro-tarefa', icon: 'la-clipboard-list-solid', color: 'green' },
     { name: 'Cadastro Categorias', link: '/', icon: 'bi-list-stars', color: 'yellow' },
     { name: 'Configurações', link: '/', icon: 'ri-settings-4-line', color: 'white' },
     { name: 'Sair', link: '/', icon: 'bi-arrow-bar-left', color: 'red' },
