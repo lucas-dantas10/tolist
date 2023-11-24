@@ -4,6 +4,7 @@ import Login from '../views/Login/Login.vue';
 import Register from '../views/Register/Register.vue';
 import store from '../store';
 import Home from '../views/Home/Home.vue';
+import RegisterTask from '../views/RegisterTask/RegisterTask.vue';
 
 const routes = [
     {
@@ -18,6 +19,12 @@ const routes = [
                 path: '/home',
                 name: 'app.home',
                 component: Home
+            },
+
+            {
+                path: '/cadastro-tarefa',
+                name: 'app.cadastro.tarefa',
+                component: RegisterTask
             }
         ]
     },
