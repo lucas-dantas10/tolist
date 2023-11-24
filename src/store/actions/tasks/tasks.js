@@ -2,7 +2,7 @@ import store from '../..';
 import axiosClient from '../../../axios';
 
 export function getTasks({commit}, { url = null, search = '', per_page = 10, sort_field = 'title', sort_direction = 'asc', status, priority } = {}) {
-
+    commit('setTasks', [true]);
     url = url || '/task';
 
     return axiosClient.get(url, {
@@ -11,9 +11,13 @@ export function getTasks({commit}, { url = null, search = '', per_page = 10, sor
         }
     })
         .then(({data}) => {
-            commit('setTasks', data.tasks);
-        })
+            commit('setTasks', [false, data]);
+        });
 
+}
+
+export function updateTask({commit}, task) {
+    return axiosClient.put(`/task/${task.id}`, task);
 }
 
 export function deleteTask({commit}, idTask) {
