@@ -4,7 +4,7 @@ import DropdownSearch from "../../components/DropdownSearch/DropdownSearch.vue";
 import Dropdown from "../../components/Dropdown/Dropdown.vue";
 import store from "../../store";
 
-const tasks = computed(() => store.state.tasks.data);
+const tasks = computed(() => store.state.tasks);
 const status = computed(() => store.state.status.data);
 const priorities = computed(() => store.state.priority.data);
 const views = ref([{ type: "Titulo" }, { type: "Status" }, { type: "Prioridade" }]);
@@ -100,6 +100,14 @@ function reset() {
     statusId.value = 0;
     getTasks();
 }
+
+function getForPage(link) {
+    if (!link.url || link.active) {
+        return;
+    }
+
+    getTasks(link.url);
+}
 </script>
 
 <template>
@@ -147,82 +155,94 @@ function reset() {
             </button>
         </form>
 
-        <Transition name="slide-fade">
-            <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">Tarefa</th>
-                            <th v-if="isViewActive.title" scope="col" class="px-6 py-3">Titulo</th>
-                            <th v-if="isViewActive.status" scope="col" class="px-6 py-3">Status</th>
-                            <th v-if="isViewActive.priority" scope="col" class="px-6 py-3">Prioridade</th>
-                            <th scope="col" class="px-6 py-3">Ações</th>
-                        </tr>
-                    </thead>
+        <div class="relative animate-fade-in-down">
+            <table class="w-full border border-gray-200 rounded-md shadow-sm text-sm text-left rtl:text-right text-gray-500">
+                <thead class="text-xs border-b border-gray-300 text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-gray-400">Tarefa</th>
+                        <th v-if="isViewActive.title" scope="col" class="px-6 py-3 text-gray-400">Titulo</th>
+                        <th v-if="isViewActive.status" scope="col" class="px-6 py-3 text-gray-400">Status</th>
+                        <th v-if="isViewActive.priority" scope="col" class="px-6 py-3 text-gray-400">Prioridade</th>
+                        <th scope="col" class="px-6 py-3 text-gray-400">Ações</th>
+                    </tr>
+                </thead>
 
-                    <tbody v-if="tasks.length == 0">
-                        <h2 class="p-6">Não possui tarefas</h2>
-                    </tbody>
-                    <tbody v-else>
-                        <tr
-                            v-for="(task, i) in tasks"
-                            :key="i"
-                            class="bg-white border-b border-gray-50 text-gray-900"
-                        >
-                            <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-                                <div class="flex items-center gap-2">
-                                    <input
-                                        type="checkbox"
-                                        id="myCheckbox"
-                                        class="form-checkbox w-4 h-4 rounded-md text-indigo-600 checked:bg-gray-900:rounded-md"
-                                    />
-                                    {{ task.title }}
-                                </div>
-                            </th>
-                            <td class="px-6 py-4" v-if="isViewActive.title">
-                                <span class="border border-gray-200 px-2 py-1 rounded-md mr-2">{{
-                                    task.category.name
-                                }}</span>
-                                {{ task.description }}
-                            </td>
-                            <td class="px-6 py-4" v-if="isViewActive.status">
-                                <v-icon :name="task.status.icon" fill="black" />
-                                {{ task.status.type }}
-                            </td>
-                            <td class="px-6 py-4" v-if="isViewActive.priority">
-                                <v-icon :name="task.priority.icon" fill="black" />
-                                {{ task.priority.type }}
-                            </td>
-                            <td class="px-6 py-4">
-                                <Dropdown
-                                    icon="bi-three-dots"
-                                    :items="[
-                                        { title: 'Editar', task: task },
-                                        { title: 'Deletar', task: task },
-                                    ]"
-                                    @action="deleteTask"
+                <tbody v-if="tasks.data.length == 0">
+                    <h2 class="p-6">Não possui tarefas</h2>
+                </tbody>
+
+                <tbody v-else>
+                    <tr
+                        v-for="(task, i) in tasks.data"
+                        :key="i"
+                        class="bg-white border-b border-gray-200 text-gray-900 hover:bg-gray-50"
+                    >
+                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+                            <div class="flex items-center gap-2">
+                                <input
+                                    type="checkbox"
+                                    :id="task.title"
+                                    class="form-checkbox w-4 h-4 rounded-md text-indigo-600 checked:bg-gray-900:rounded-md"
                                 />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </Transition>
+                                {{ task.title }}
+                            </div>
+                        </th>
+                        <td class="px-6 py-4" v-if="isViewActive.title">
+                            <span class="border border-gray-200 px-2 py-1 rounded-md mr-2">{{
+                                task.category.name
+                            }}</span>
+                            {{ task.description }}
+                        </td>
+                        <td class="px-6 py-4" v-if="isViewActive.status">
+                            <v-icon :name="task.status.icon" fill="black" />
+                            {{ task.status.type }}
+                        </td>
+                        <td class="px-6 py-4" v-if="isViewActive.priority">
+                            <v-icon :name="task.priority.icon" fill="black" />
+                            {{ task.priority.type }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <Dropdown
+                                icon="bi-three-dots"
+                                :items="[
+                                    { title: 'Editar', task: task },
+                                    { title: 'Deletar', task: task },
+                                ]"
+                                @action="deleteTask"
+                            />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div v-if="!tasks.loading" class="flex justify-between items-center mt-20 p-2">
+            <div v-if="tasks.data.length" class="font-semibold">Mostando de {{ tasks.from }} a {{ tasks.to }}</div>
+            <nav
+                v-if="tasks.total > tasks.limit"
+                class="relative z-1 inline-flex justify-center rounded-md shadow-sm -space-x-px"
+                aria-label="Pagination"
+            >
+                <a
+                    v-for="(link, i) of tasks.links"
+                    :key="i"
+                    :disabled="!link.url"
+                    href="#"
+                    @click.prevent="getForPage(link)"
+                    aria-current="page"
+                    class="relative inline-flex items-center px-4 py-2 border text-sm font-medium whitespace-nowrap"
+                    :class="[
+                        link.active
+                            ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
+                            : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
+                        i === 0 ? 'rounded-l-md' : '',
+                        i === tasks.links.length - 1 ? 'rounded-r-md' : '',
+                        !link.url ? ' bg-gray-100 text-gray-700' : '',
+                    ]"
+                    v-html="link.label"
+                >
+                </a>
+            </nav>
+        </div>
     </div>
 </template>
-
-<style scoped>
-.slide-fade-enter-active {
-    transition: all 0.3s ease-out;
-}
-
-.slide-fade-leave-active {
-    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-    transform: translateY(20px);
-    opacity: 0;
-}
-</style>
