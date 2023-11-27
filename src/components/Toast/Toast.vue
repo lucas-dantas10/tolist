@@ -1,7 +1,7 @@
 <template>
     <div
         v-show="toast.show"
-        class="fixed w-[400px] left-[85%] -ml-[200px] top-2 py-2 px-4 pb-4 opacity-80 text-white"
+        class="fixed w-[400px] z-10 left-[85%] -ml-[200px] top-2 py-2 px-4 pb-4 opacity-80 text-white"
         :class="{
             'bg-emerald-500': toast.type == 'success',
             'bg-red-500': toast.type == 'error'
