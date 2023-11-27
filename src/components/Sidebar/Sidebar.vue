@@ -1,10 +1,12 @@
 <script setup>
 import { ref } from 'vue';
+import store from '../../store';
+import router from '../../router';
 
 const menus = ref([
     { name: 'Tarefas', link: '/home', icon: 'fa-tasks', color: 'blue' },
     { name: 'Cadastro Tarefas', link: '/cadastro-tarefa', icon: 'la-clipboard-list-solid', color: 'green' },
-    { name: 'Cadastro Categorias', link: '/', icon: 'bi-list-stars', color: 'yellow' },
+    { name: 'Cadastro Categorias', link: '/cadastro-categoria', icon: 'bi-list-stars', color: 'yellow' },
     { name: 'Configurações', link: '/', icon: 'ri-settings-4-line', color: 'white' },
     { name: 'Sair', link: '/', icon: 'bi-arrow-bar-left', color: 'red' },
 ])
@@ -29,6 +31,14 @@ function handleOutsideClick(event) {
         isOpen.value = false;
         document.removeEventListener('click', handleOutsideClick);
     }
+}
+
+function logout(menu) {
+    if (menu === 'Sair') {
+        store.dispatch('logout')
+            .then(() => router.push({name: 'login'}));
+    }
+    
 }
 </script>
 
@@ -69,6 +79,7 @@ function handleOutsideClick(event) {
                 <li v-for="(menu, i) in menus" :key="i">
                     <router-link
                         :to="menu.link"
+                        @click.prevent="logout(menu.name)"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                     >
                         <v-icon :name="menu.icon" :fill="menu.color" />
