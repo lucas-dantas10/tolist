@@ -1,5 +1,5 @@
-import { login } from "./actions/login/login";
-import { getTasks, deleteTask, updateTask } from "./actions/tasks/tasks";
+import { login, logout } from "./actions/login/login";
+import { getTasks, deleteTask, updateTask, storeTask } from "./actions/tasks/tasks";
 import { getCurrentUser } from "./actions/user/user";
 import { getStatus } from "./actions/status/status";
 import { getPriority } from "./actions/priority/priority";
@@ -14,4 +14,6 @@ export default {
     deleteTask,
     getCategories,
     updateTask,
+    logout,
+    storeTask
 }

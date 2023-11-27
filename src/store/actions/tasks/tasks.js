@@ -4,7 +4,7 @@ import axiosClient from '../../../axios';
 export function getTasks({commit}, { url = null, search = '', per_page = 10, sort_field = 'title', sort_direction = 'asc', status, priority } = {}) {
     commit('setTasks', [true]);
     url = url || '/task';
-
+    per_page = Number(per_page);
     return axiosClient.get(url, {
         params: {
             search, sort_field, sort_direction, per_page, status, priority,
@@ -16,8 +16,22 @@ export function getTasks({commit}, { url = null, search = '', per_page = 10, sor
 
 }
 
+export function storeTask({commit}, task) {
+    return axiosClient.post('/task', task)
+        .then(({data}) => {
+            // console.log(data);
+            // commit('setTasks', data.tasks);
+            commit('showToast', {
+                message: data.message,
+                type: 'success'
+            });
+        })
+}
+
 export function updateTask({commit}, task) {
-    return axiosClient.put(`/task/${task.id}`, task);
+    commit('setTasks', [true]);
+    return axiosClient.put(`/task/${task.id}`, task)
+        .finally(() => commit('setTasks', [false]));
 }
 
 export function deleteTask({commit}, idTask) {
