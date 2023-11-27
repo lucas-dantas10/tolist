@@ -7,6 +7,7 @@ import store from "../../store";
 const tasks = computed(() => store.state.tasks);
 const status = computed(() => store.state.status.data);
 const priorities = computed(() => store.state.priority.data);
+
 const views = ref([{ type: "Titulo" }, { type: "Status" }, { type: "Prioridade" }]);
 const isViewActive = ref({ title: true, status: true, priority: true });
 
@@ -16,6 +17,7 @@ const sortField = ref("title");
 const sortDirection = ref("asc");
 const priorityId = ref(0);
 const statusId = ref(0);
+
 
 const emit = defineEmits(["click-edit"]);
 
@@ -108,10 +110,22 @@ function getForPage(link) {
 
     getTasks(link.url);
 }
+
+function changeStatus(task, ev) {
+    task.status.id = 3; // id do status 'Feito'
+    if (ev.checked) {
+        store.dispatch('updateTask', task);
+        getTasks();
+    } else {
+        task.status.id = 1;
+        store.dispatch('updateTask', task);
+        getTasks();
+    }
+} 
 </script>
 
 <template>
-    <div>
+    <div class="w-full h-screen">
         <form
             @submit.prevent="getTasks()"
             class="flex flex-col items-start gap-2 mb-8 lg:flex-row lg:items-center lg:justify-between"
@@ -155,14 +169,18 @@ function getForPage(link) {
             </button>
         </form>
 
-        <div class="relative animate-fade-in-down">
-            <table class="w-full border border-gray-200 rounded-md shadow-sm text-sm text-left rtl:text-right text-gray-500">
+        <div class="w-full h-full relative animate-fade-in-down">
+            <table
+                class="w-full border border-gray-200 rounded-md shadow-sm text-sm text-left rtl:text-right text-gray-500"
+            >
                 <thead class="text-xs border-b border-gray-300 text-gray-700 uppercase bg-gray-50">
                     <tr>
                         <th scope="col" class="px-6 py-3 text-gray-400">Tarefa</th>
-                        <th v-if="isViewActive.title" scope="col" class="px-6 py-3 text-gray-400">Titulo</th>
+                        <th v-if="isViewActive.title" scope="col" class="px-6 py-3 text-gray-400">Descrição</th>
                         <th v-if="isViewActive.status" scope="col" class="px-6 py-3 text-gray-400">Status</th>
-                        <th v-if="isViewActive.priority" scope="col" class="px-6 py-3 text-gray-400">Prioridade</th>
+                        <th v-if="isViewActive.priority" scope="col" class="px-6 py-3 text-gray-400">
+                            Prioridade
+                        </th>
                         <th scope="col" class="px-6 py-3 text-gray-400">Ações</th>
                     </tr>
                 </thead>
@@ -182,6 +200,8 @@ function getForPage(link) {
                                 <input
                                     type="checkbox"
                                     :id="task.title"
+                                    :checked="task.status.type == 'Feito' ? true : false"
+                                    @click="changeStatus(task, $event.target)"
                                     class="form-checkbox w-4 h-4 rounded-md text-indigo-600 checked:bg-gray-900:rounded-md"
                                 />
                                 {{ task.title }}
@@ -216,33 +236,46 @@ function getForPage(link) {
             </table>
         </div>
 
-        <div v-if="!tasks.loading" class="flex justify-between items-center mt-20 p-2">
+        <div v-if="!tasks.loading" class="w-full flex justify-between items-center mt-20 p-2">
             <div v-if="tasks.data.length" class="font-semibold">Mostando de {{ tasks.from }} a {{ tasks.to }}</div>
-            <nav
-                v-if="tasks.total > tasks.limit"
-                class="relative z-1 inline-flex justify-center rounded-md shadow-sm -space-x-px"
-                aria-label="Pagination"
-            >
-                <a
-                    v-for="(link, i) of tasks.links"
-                    :key="i"
-                    :disabled="!link.url"
-                    href="#"
-                    @click.prevent="getForPage(link)"
-                    aria-current="page"
-                    class="relative inline-flex items-center px-4 py-2 border text-sm font-medium whitespace-nowrap"
-                    :class="[
-                        link.active
-                            ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
-                            : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
-                        i === 0 ? 'rounded-l-md' : '',
-                        i === tasks.links.length - 1 ? 'rounded-r-md' : '',
-                        !link.url ? ' bg-gray-100 text-gray-700' : '',
-                    ]"
-                    v-html="link.label"
+            <div class="flex items-center gap-8">
+                <div class="flex gap-2 items-center">
+                    <label class="font-semibold">Linhas por página</label>
+                    <select @change="getTasks()" v-model="perPage" class="border border-gray-300 rounded-md px-2 py-2">
+                        <option>10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+
+                <nav
+                    v-if="tasks.total > tasks.limit"
+                    class="relative z-1 inline-flex justify-center rounded-md shadow-sm -space-x-px"
+                    aria-label="Pagination"
                 >
-                </a>
-            </nav>
+                    <a
+                        v-for="(link, i) of tasks.links"
+                        :key="i"
+                        :disabled="!link.url"
+                        href="#"
+                        @click.prevent="getForPage(link)"
+                        aria-current="page"
+                        class="relative inline-flex items-center px-4 py-2 border text-sm font-medium whitespace-nowrap"
+                        :class="[
+                            link.active
+                                ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
+                                : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
+                            i === 0 ? 'rounded-l-md' : '',
+                            i === tasks.links.length - 1 ? 'rounded-r-md' : '',
+                            !link.url ? ' bg-gray-100 text-gray-700' : '',
+                        ]"
+                        v-html="link.label"
+                    >
+                    </a>
+                </nav>
+            </div>
         </div>
     </div>
 </template>

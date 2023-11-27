@@ -2,7 +2,6 @@
 import { onMounted, ref } from 'vue';
 import TasksTable from './TasksTable.vue';
 import TaskModal from './TaskModal.vue';
-import store from '../../store';
 
 const DEFAULT_TASK = {
     id: '',
@@ -15,10 +14,6 @@ const DEFAULT_TASK = {
 
 const tasksModel = ref({...DEFAULT_TASK});
 const showTaskModal = ref(false);
-
-onMounted(() => {
-    store.dispatch('getCategories');
-});
 
 function showAddNewModal() {
     showTaskModal.value = true;
