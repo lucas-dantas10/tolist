@@ -5,6 +5,7 @@ import store from '../../../store';
 
 onMounted(() => {
     store.dispatch('getCurrentUser');
+    store.dispatch('getCategories');
 });
 </script>
 
