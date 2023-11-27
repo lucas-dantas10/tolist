@@ -8,22 +8,24 @@ export function setStatus(state, allStatus) {
         'Cancelado': 0,
     };
 
-    state.tasks.data.forEach(task => {
-        let statusType = task.status.type;
-        statusType == 'Em progresso' ? statusType = 'progresso' : '';
-        if (statusType in statusCounts) {
-            statusCounts[statusType] += 1;
-            
-        } else {
-            console.warn(`Unknown task status: ${statusType}`);
-        }
-    });
-
-    state.status.data.forEach(status => {
-        status.amountToDo = statusCounts["Fazer"];
-        status.amountInProgress = statusCounts["progresso"];
-        status.amountDone = statusCounts["Feito"];
-        status.amountCanceled = statusCounts["Cancelado"];
-        status.isCheck = false;
-    });  
+    setTimeout(() => {
+        state.tasks.data.forEach(task => {
+            let statusType = task.status.type;
+            statusType == 'Em progresso' ? statusType = 'progresso' : '';
+            if (statusType in statusCounts) {
+                statusCounts[statusType] += 1;
+                
+            } else {
+                console.warn(`Unknown task status: ${statusType}`);
+            }
+        });
+    
+        state.status.data.forEach(status => {
+            status.amountToDo = statusCounts["Fazer"];
+            status.amountInProgress = statusCounts["progresso"];
+            status.amountDone = statusCounts["Feito"];
+            status.amountCanceled = statusCounts["Cancelado"];
+            status.isCheck = false;
+        });  
+    }, 0);
 }
