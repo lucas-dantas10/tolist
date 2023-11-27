@@ -17,7 +17,6 @@ const spinner = computed(() => store.state.spinner);
 function submit() {
     store.dispatch('login', forms.value)
         .then(({data}) => {
-            spinner.value.loading = true;
             router.push({name: 'app.home'});
         })
         .catch(({response}) => {
@@ -26,8 +25,7 @@ function submit() {
                 message: errorMsg.value,
                 type: 'error'
             });
-        })
-        .finally(() => spinner.value.loading = false);
+        });
 }
 
 </script>
