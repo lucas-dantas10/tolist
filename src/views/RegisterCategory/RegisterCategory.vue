@@ -1,15 +1,20 @@
 <script setup>
 import { ref } from 'vue';
 import BaseInput from '../../components/BaseInput/BaseInput.vue';
+import store from '../../store';
 
 const form = ref({});
+
+function registerCategory() {
+    store.dispatch('storeCategory', form.value);
+}
 </script>
 
 <template>
     <section>
         <h1 class="text-4xl text-gray-900 font-bold">Cadastro Categoria</h1>
 
-        <form class="mt-8">
+        <form @submit.prevent="registerCategory" class="mt-8">
             <BaseInput 
                 v-model="form.name"
                 label="Nome da Categoria"
