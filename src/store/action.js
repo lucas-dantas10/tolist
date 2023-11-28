@@ -3,7 +3,7 @@ import { getTasks, deleteTask, updateTask, storeTask } from "./actions/tasks/tas
 import { getCurrentUser } from "./actions/user/user";
 import { getStatus } from "./actions/status/status";
 import { getPriority } from "./actions/priority/priority";
-import { getCategories } from "./actions/category/category";
+import { getCategories, storeCategory } from "./actions/category/category";
 
 export default {
     login,
@@ -15,5 +15,6 @@ export default {
     getCategories,
     updateTask,
     logout,
-    storeTask
+    storeTask,
+    storeCategory,
 }
