@@ -6,6 +6,7 @@ import store from '../store';
 import Home from '../views/Home/Home.vue';
 import RegisterTask from '../views/RegisterTask/RegisterTask.vue';
 import RegisterCategory from '../views/RegisterCategory/RegisterCategory.vue';
+import Settings from '../views/Settings/Settings.vue';
 
 const routes = [
     {
@@ -32,6 +33,12 @@ const routes = [
                 path: '/cadastro-categoria',
                 name: 'app.cadastro.categoria',
                 component: RegisterCategory
+            },
+
+            {
+                path: '/configuracoes',
+                name: 'app.configuracoes',
+                component: Settings
             },
         ]
     },
