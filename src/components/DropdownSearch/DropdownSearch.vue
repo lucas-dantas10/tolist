@@ -75,7 +75,7 @@ function handleOutsideClick(event) {
         </button>
 
         <!-- Dropdown menu -->
-        <div id="dropdownSearch" ref="dropdown" :style="{'margin-inline': `${props.marginInline}rem`}" class="z-10 mt-[20rem] hidden bg-white rounded-lg shadow w-60 fixed animate-fade-in-down">
+        <div id="dropdownSearch" ref="dropdown" :style="{'margin-inline': `${props.marginInline}rem`}" class="z-10 mt-[20rem] hidden bg-white rounded-lg shadow w-60 fixed animate-fade-in-down dark:bg-gray-800 dark:text-white">
             <div class="p-2 border-b border-gray-200">
                 <label class="sr-only">Search</label>
                 <div class="relative">
@@ -120,12 +120,12 @@ function handleOutsideClick(event) {
                         />
                         <label
                             :for="item.type"
-                            class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded"
+                            class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded dark:text-white"
                             >{{ item.type }}</label
                         >
 
                         <div>
-                            <p class="text-black px-2">{{ displayAmount(item) }}</p>
+                            <p class="text-black px-2 dark:text-white">{{ displayAmount(item) }}</p>
                         </div>
                         
                     </div>

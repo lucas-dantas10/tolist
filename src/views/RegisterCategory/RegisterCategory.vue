@@ -12,7 +12,7 @@ function registerCategory() {
 
 <template>
     <section>
-        <h1 class="text-4xl text-gray-900 font-bold">Cadastro Categoria</h1>
+        <h1 class="text-4xl text-gray-900 font-bold dark:text-gray-50">Cadastro Categoria</h1>
 
         <form @submit.prevent="registerCategory" class="mt-8">
             <BaseInput 

@@ -43,11 +43,11 @@ function actionTask(item) {
     <div
         id="dropdown"
         ref="dropdown"
-        class="z-[9998] hidden mt-2 mr-8 fixed bg-white divide-y divide-gray-100 rounded-lg shadow w-20 animate-fade-in-down"
+        class="z-[9998] hidden mt-2 mr-8 fixed bg-white divide-y divide-gray-100 rounded-lg shadow w-20 animate-fade-in-downd dark:bg-gray-800"
     >
         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
             <li v-for="(item, i) in props.items" :key="i">
-                <a href="#" @click="emit('action', {type: item.title, task: item.task})" class="block px-4 py-2 hover:bg-gray-100 text-black"
+                <a href="#" @click="emit('action', {type: item.title, task: item.task})" class="block px-4 py-2 hover:bg-gray-100 text-black dark:text-white dark:hover:bg-gray-600"
                     >{{item.title}}</a
                 >
             </li>

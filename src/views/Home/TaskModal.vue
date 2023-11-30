@@ -66,29 +66,29 @@ function closeModal() {
     <Transition name="slide-fade">
         <div
             v-show="show"
-            class="bg-gray-100 fixed bg-opacity-50 z-[9998] top-0 left-0 w-full h-full table transition-opacity duration-300 ease"
+            class="bg-gray-100 fixed bg-opacity-50 z-[9998] top-0 left-0 w-full h-full table transition-opacity duration-300 ease dark:bg-gray-700 dark:bg-opacity-50"
             @close="show = false"
         >
             <div class="table-cell align-middle">
                 <div
-                    class="w-[500px] h-[550px] my-0 mx-auto py-[20px] px-[30px] shadow-md bg-gray-300 rounded-md transition-all duration-300 ease"
+                    class="w-[500px] h-[550px] my-0 mx-auto py-[20px] px-[30px] shadow-md bg-gray-300 rounded-md transition-all duration-300 ease dark:bg-gray-900"
                 >
                     <form @submit.prevent="editTask" class="flex flex-col justify-center gap-2">
                         <h1 class="text-2xl font-bold">Edição de Tarefa</h1>
 
                         <div class="flex flex-col gap-2 justify-center">
                             <label for="title" class="font-semibold">Título</label>
-                            <input type="text" v-model="taskModel.title" id="title" class="py-1 px-2 rounded-md border-2 border-gray-300 text-gray-900 focus:ring-blue-900 focus:outline-blue-500 active:outline-blue-900" />
+                            <input type="text" v-model="taskModel.title" id="title" class="py-1 px-2 rounded-md border-2 border-gray-300 text-gray-900 focus:ring-blue-900 focus:outline-blue-500 active:outline-blue-900 dark:bg-gray-300" />
                         </div>
 
                         <div class="flex flex-col gap-2 justify-center">
                             <label for="description" class="font-semibold">Descrição</label>
-                            <input type="text" v-model="taskModel.description" id="description" class="py-1 px-2 rounded-md border-2 border-gray-300 text-gray-900 focus:ring-blue-900 focus:outline-blue-500 active:outline-blue-900" />
+                            <input type="text" v-model="taskModel.description" id="description" class="py-1 px-2 rounded-md border-2 border-gray-300 text-gray-900 focus:ring-blue-900 focus:outline-blue-500 active:outline-blue-900 dark:bg-gray-300" />
                         </div>
 
                         <div class="flex flex-col gap-2 justify-center">
                             <label class="font-semibold">Categoria</label>
-                            <select v-model="taskModel.category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 ">
+                            <select v-model="taskModel.category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-300">
                                 <option disabled value="">Escolha uma categoria</option>
                                 <option :value="category" v-for="category in categories.data" :key="category.id" :disabled="taskModel.category.name === category.name">
                                     {{category.name}}
@@ -98,7 +98,7 @@ function closeModal() {
 
                         <div class="flex flex-col gap-2 justify-center">
                             <label class="font-semibold">Prioridade</label>
-                            <select v-model="taskModel.priority" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 ">
+                            <select v-model="taskModel.priority" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-300">
                                 <option disabled value="">Escolha uma prioridade</option>
                                 <option :value="priority" v-for="priority in priorities.data" :key="priority.id" :disabled="taskModel.priority.type === priority.type">
                                     {{ priority.type}}
@@ -108,7 +108,7 @@ function closeModal() {
 
                         <div class="flex flex-col gap-2 justify-center">
                             <label class="font-semibold">Status</label>
-                            <select v-model="taskModel.status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 ">
+                            <select v-model="taskModel.status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-300">
                                 <option disabled value="">Escolha um status</option>
                                 <option :value="st" v-for="st in status.data" :key="st.id" :disabled="taskModel.status.type === st.type">
                                     {{ st.type }}

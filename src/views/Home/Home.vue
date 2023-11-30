@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import TasksTable from './TasksTable.vue';
 import TaskModal from './TaskModal.vue';
 
@@ -35,7 +35,7 @@ function onModalClose() {
     <section>
         <div class="flex items-center justify-between mb-14">
             <div class="flex flex-col gap-2">
-                <h1 class="text-4xl text-gray-900 font-bold">Tarefas</h1>
+                <h1 class="text-4xl text-gray-900 font-bold dark:text-gray-50">Tarefas</h1>
 
                 <p class="text-gray-500">Aqui está uma lista das suas tarefas dessa semana!</p>
             </div>

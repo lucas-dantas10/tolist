@@ -74,7 +74,7 @@ function logout(menu) {
         aria-label="Sidebar"
         :class="{ 'translate-x-[0]': isOpen }"
     >
-        <div class="h-full px-3 py-4 overflow-y-auto bg-gray-900">
+        <div class="h-full px-3 py-4 overflow-y-auto bg-gray-400 dark:bg-gray-800">
             <ul class="space-y-2 font-medium">
                 <li v-for="(menu, i) in menus" :key="i">
                     <router-link

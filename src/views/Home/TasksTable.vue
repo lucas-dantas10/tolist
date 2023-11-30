@@ -135,7 +135,7 @@ function changeStatus(task, ev) {
                     type="text"
                     placeholder="Filtro tarefas..."
                     v-model="search"
-                    class="border border-gray-200 rounded-lg px-2 py-1 focus:outline-gray-200"
+                    class="border border-gray-200 rounded-lg px-2 py-[.1rem] focus:outline-gray-200 dark:bg-gray-200 dark:text-black"
                 />
 
                 <DropdownSearch title="Status" icon="bi-plus-circle" :items="status" @checked="filter" />
@@ -146,7 +146,7 @@ function changeStatus(task, ev) {
                     v-if="search != ''"
                     type="button"
                     @click="reset()"
-                    class="font-semibold px-4 py-1 hover:border hover:bg-gray-100 hover:rounded-md transition-colors"
+                    class="font-semibold px-4 py-1 hover:border hover:bg-gray-100 hover:rounded-md transition-colors dark:hover:bg-gray-700"
                 >
                     Reset
                     <v-icon name="io-close-outline" />
@@ -171,9 +171,9 @@ function changeStatus(task, ev) {
 
         <div class="w-full h-full relative animate-fade-in-down">
             <table
-                class="w-full border border-gray-200 rounded-md shadow-sm text-sm text-left rtl:text-right text-gray-500"
+                class="w-full border border-gray-200 rounded-md shadow-sm text-sm text-left rtl:text-right text-gray-500 dark:border-gray-500"
             >
-                <thead class="text-xs border-b border-gray-300 text-gray-700 uppercase bg-gray-50">
+                <thead class="text-xs border-b border-gray-300 text-gray-700 uppercase bg-gray-50 dark:bg-gray-800 dark:border-gray-500">
                     <tr>
                         <th scope="col" class="px-6 py-3 text-gray-400">Tarefa</th>
                         <th v-if="isViewActive.title" scope="col" class="px-6 py-3 text-gray-400">Descrição</th>
@@ -186,14 +186,14 @@ function changeStatus(task, ev) {
                 </thead>
 
                 <tbody v-if="tasks.data.length == 0">
-                    <h2 class="p-6">Não possui tarefas</h2>
+                    <h2 class="p-6 dark:text-white">Não possui tarefas</h2>
                 </tbody>
 
                 <tbody v-else>
                     <tr
                         v-for="(task, i) in tasks.data"
                         :key="i"
-                        class="bg-white border-b border-gray-200 text-gray-900 hover:bg-gray-50"
+                        class="bg-white border-b border-gray-200 text-gray-900 hover:bg-gray-50 dark:bg-gray-900 dark:text-white"
                     >
                         <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
                             <div class="flex items-center gap-2">
@@ -214,11 +214,11 @@ function changeStatus(task, ev) {
                             {{ task.description }}
                         </td>
                         <td class="px-6 py-4" v-if="isViewActive.status">
-                            <v-icon :name="task.status.icon" fill="black" />
+                            <v-icon :name="task.status.icon" />
                             {{ task.status.type }}
                         </td>
                         <td class="px-6 py-4" v-if="isViewActive.priority">
-                            <v-icon :name="task.priority.icon" fill="black" />
+                            <v-icon :name="task.priority.icon" />
                             {{ task.priority.type }}
                         </td>
                         <td class="px-6 py-4">
