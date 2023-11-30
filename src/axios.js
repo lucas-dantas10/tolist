@@ -3,7 +3,7 @@ import store from './store';
 import router from './router/index.js';
 
 const axiosClient = axios.create({
-    baseURL: 'https://omlyy.com.br/api',
+    baseURL: 'https://omlyy.com.br/public/api',
 });
 
 axiosClient.interceptors.request.use(config => {
