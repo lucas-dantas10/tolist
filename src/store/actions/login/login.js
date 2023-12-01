@@ -1,14 +1,14 @@
 import axiosClient from '../../../axios';
 
 export function login({commit, state}, user) {
+    state.spinner.loading = true;
     return axiosClient.post('/login', user)
         .then(({data}) => {
-            state.spinner.loading = true;
-            console.log(state.spinner);
             commit('setUser', data.user);
             commit('setToken', data.token);
             return data;
         })
+        .catch(({response}) => response)
         .finally(() => state.spinner.loading = false);
 }
 
