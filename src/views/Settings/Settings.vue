@@ -1,12 +1,13 @@
 <script setup>
 import BaseInput from "../../components/BaseInput/BaseInput.vue";
 import { useDark, useToggle } from "@vueuse/core";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import store from '../../store';
 
 const form = ref({});
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
+const user = computed(() => store.state.user)
 
 function updateUser() {
     store.dispatch('updateUser', form.value)
@@ -15,6 +16,17 @@ function updateUser() {
 <template>
     <section class="w-full h-full">
         <h1 class="text-4xl text-gray-900 font-bold dark:text-gray-50">Configurações</h1>
+
+        <div class="mt-8 flex flex-col gap-2">
+            <label for="">
+                <span class="border border-emerald-500 text-white shadow-sm px-5 rounded-sm bg-emerald-500">Meu Nome</span> <span>{{user.data.name}}</span>
+            </label>
+
+            <label for="">
+                <span class="border border-emerald-500 text-white shadow-sm px-6 rounded-sm bg-emerald-500">Meu Email</span> <span>{{user.data.email}}</span>
+            </label>
+            
+        </div>
 
         <form @submit.prevent="updateUser" class="flex flex-col gap-4 w-full h-full mt-10">
             <BaseInput label="Mudar Nome" v-model="form.name" />
