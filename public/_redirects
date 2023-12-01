@@ -1,6 +1,6 @@
-/home                /
-/cadastro-tarefa     /register/task
-/cadastro-categoria  /register/categoria
-/configuracoes       /settings
-/login               /login/page 
-/register            /register/page
+/home                /home
+/cadastro-tarefa     /cadastro-tarefa
+/cadastro-categoria  /cadastro-categoria
+/configuracoes       /configuracoes
+/login               /login
+/register            /register
