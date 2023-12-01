@@ -16,7 +16,7 @@ const spinner = computed(() => store.state.spinner);
 
 function submit() {
     store.dispatch('login', forms.value)
-        .then(({data}) => {
+        .then(() => {
             router.push({name: 'app.home'});
         })
         .catch(({response}) => {
