@@ -7,6 +7,7 @@ import store from "../../store";
 const tasks = computed(() => store.state.tasks);
 const status = computed(() => store.state.status.data);
 const priorities = computed(() => store.state.priority.data);
+const spinner = computed(() => store.state.spinner);
 
 const views = ref([{ type: "Titulo" }, { type: "Status" }, { type: "Prioridade" }]);
 const isViewActive = ref({ title: true, status: true, priority: true });
@@ -188,6 +189,12 @@ function changeStatus(task, ev) {
 
                 <tbody v-if="tasks.data.length == 0">
                     <h2 class="p-6 dark:text-white">Não possui tarefas</h2>
+                </tbody>
+
+                <tbody v-else-if="tasks.loading">
+                    <div class="p-6">
+                        <pacman-loader :loading="spinner.loading" size="20px" color="#FFFFFF" />
+                    </div>
                 </tbody>
 
                 <tbody v-else>
