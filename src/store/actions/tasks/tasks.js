@@ -1,8 +1,9 @@
 import store from '../..';
 import axiosClient from '../../../axios';
 
-export function getTasks({commit}, { url = null, search = '', per_page = 10, sort_field = 'title', sort_direction = 'asc', status, priority } = {}) {
+export function getTasks({commit, state}, { url = null, search = '', per_page = 10, sort_field = 'title', sort_direction = 'asc', status, priority } = {}) {
     commit('setTasks', [true]);
+    state.spinner.loading = true;
     url = url || '/task';
     per_page = Number(per_page);
     return axiosClient.get(url, {
@@ -12,6 +13,7 @@ export function getTasks({commit}, { url = null, search = '', per_page = 10, sor
     })
         .then(({data}) => {
             commit('setTasks', [false, data]);
+            state.spinner.loading = false;
         });
 
 }
