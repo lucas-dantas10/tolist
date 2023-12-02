@@ -114,12 +114,13 @@ function getForPage(link) {
 function changeStatus(task, ev) {
     task.status.id = 3; // id do status 'Feito'
     if (ev.checked) {
-        store.dispatch('updateTask', task);
-        getTasks();
+        store.dispatch('updateTask', task)
+            .finally(() => getTasks());
+        
     } else {
         task.status.id = 1;
-        store.dispatch('updateTask', task);
-        getTasks();
+        store.dispatch('updateTask', task)
+            .finally(() => getTasks());
     }
 } 
 </script>
@@ -127,7 +128,7 @@ function changeStatus(task, ev) {
 <template>
     <div class="w-full h-screen">
         <form
-            @submit.prevent="getTasks()"
+            @submit.prevent="getTasks"
             class="flex flex-col items-start gap-2 mb-8 lg:flex-row lg:items-center lg:justify-between"
         >
             <div class="flex flex-col items-start gap-2 lg:flex-row lg:items-center">
