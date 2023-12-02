@@ -30,6 +30,7 @@ export function storeUser({commit, state}, user) {
 
 export function updateUser({commit, state}, user) {
     const idUser = state.user.data.id;
+    state.spinner.loading = true;
 
     return axiosClient.put(`/user/${idUser}`, user)
         .then(({data}) => {
@@ -43,5 +44,6 @@ export function updateUser({commit, state}, user) {
                 message: response.data.message,
                 type: 'error',
             });
-        });
+        })
+        .finally(() => state.spinner.loading = false);
 }

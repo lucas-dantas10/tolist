@@ -3,11 +3,13 @@ import BaseInput from "../../components/BaseInput/BaseInput.vue";
 import { useDark, useToggle } from "@vueuse/core";
 import { computed, ref } from "vue";
 import store from '../../store';
+import Spinner from "../../components/Spinner/Spinner.vue";
 
 const form = ref({});
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
-const user = computed(() => store.state.user)
+const user = computed(() => store.state.user);
+const spinner = computed(() => store.state.spinner);
 
 function updateUser() {
     store.dispatch('updateUser', form.value)
@@ -45,9 +47,10 @@ function updateUser() {
 
             <button
                 type="submit"
-                class="w-full border border-blue-600 bg-blue-600 text-white rounded-md py-1 px-2 lg:w-[20%]"
+                class="w-full flex items-center justify-center gap-2 border border-blue-600 bg-blue-600 text-white rounded-md py-1 px-2 lg:w-[20%]"
             >
-                Aplicar Mudaças
+                {{ spinner.loading ? "Alterando..." : "Aplicar Mudaças"}}
+                <Spinner />
             </button>
         </form>
     </section>
