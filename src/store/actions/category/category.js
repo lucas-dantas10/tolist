@@ -6,6 +6,7 @@ export function getCategories({commit}) {
 }
 
 export function storeCategory({commit, state}, category) {
+    state.spinner.loading = true;
     return axiosClient.post('/category', category)
         .then(({data}) => {
             state.category.data.push(data.category);
@@ -14,5 +15,6 @@ export function storeCategory({commit, state}, category) {
                 message: data.message,
                 type: 'success'
             });
-        });
+        })
+        .finally(() => state.spinner.loading = false);
 }
