@@ -18,7 +18,8 @@ export function getTasks({commit, state}, { url = null, search = '', per_page = 
 
 }
 
-export function storeTask({commit}, task) {
+export function storeTask({commit, state}, task) {
+    state.spinner.loading = true;
     return axiosClient.post('/task', task)
         .then(({data}) => {
             // console.log(data);
@@ -28,6 +29,7 @@ export function storeTask({commit}, task) {
                 type: 'success'
             });
         })
+        .finally(() => state.spinner.loading = false);
 }
 
 export function updateTask({commit}, task) {
