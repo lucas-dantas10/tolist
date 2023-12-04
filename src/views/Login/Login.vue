@@ -31,28 +31,28 @@ function submit() {
 </script>
 
 <template>
-    <section class="bg-gray-50">
+    <section class="bg-gray-50 dark:bg-gray-900">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <div
-                class="w-full bg-gray-300 rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0"
+                class="w-full bg-gray-300 rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-700"
             >
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1
-                        class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl"
+                        class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-gray-50"
                     >
                         Entrar com a sua conta
                     </h1>
 
                     <div class="bg-gray-400 rounded-md p-6">
-                        <span class="font-bold text-lg">Demo User</span>
-                        <div class="font-semibold">
+                        <span class="font-bold text-lg dark:text-gray-900">Demo User</span>
+                        <div class="font-semibold dark:text-gray-900">
                             <p>email: user1@example.com</p>
                             <p>senha: user123</p>
                         </div>
                     </div>
                     <form @submit.prevent="submit" class="space-y-4 md:space-y-6">
                         <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900"
+                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-50"
                                 >Seu Email</label
                             >
                             <input
@@ -68,7 +68,7 @@ function submit() {
                         <div>
                             <label
                                 for="password"
-                                class="block mb-2 text-sm font-medium text-gray-900"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-50"
                                 >Senha</label
                             >
                             <input
@@ -89,11 +89,11 @@ function submit() {
                                         aria-describedby="remember"
                                         type="checkbox"
                                         v-model="forms.remember"
-                                        class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300"
+                                        class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-900"
                                     />
                                 </div>
                                 <div class="ml-3 text-sm">
-                                    <label for="remember" class="text-gray-500"
+                                    <label for="remember" class="text-gray-500 dark:text-gray-50"
                                         >Lembre de mim</label
                                     >
                                 </div>
@@ -111,9 +111,9 @@ function submit() {
                             {{ spinner.loading == false ? 'Entrar' : 'Verificando...' }}
                             <Spinner />
                         </button>
-                        <p class="text-sm font-light text-gray-500">
+                        <p class="text-sm font-light text-gray-500 dark:text-gray-50">
                             Você não tem conta ainda?
-                            <router-link to="register" class="font-medium text-primary-600 hover:underline"
+                            <router-link to="register" class="font-medium text-primary-600 hover:underline dark:text-blue-400"
                                 >Registrar</router-link>
                         </p>
                     </form>
