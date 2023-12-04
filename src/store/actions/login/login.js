@@ -12,12 +12,14 @@ export function login({commit, state}, user) {
         .finally(() => state.spinner.loading = false);
 }
 
-export function logout({commit}) {
+export function logout({commit, state}) {
+    state.spinner.loading = true;
     return axiosClient.post('/logout')
         .then(response => {
             commit('setUser', {});
             commit('setToken', null);
             return response;
-        });
+        })
+        .finally(() => state.spinner.loading = false);
 }
 
