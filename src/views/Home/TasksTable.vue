@@ -201,7 +201,7 @@ function changeStatus(task, ev) {
                     <tr
                         v-for="(task, i) in tasks.data"
                         :key="i"
-                        class="bg-white border-b border-gray-200 text-gray-900 hover:bg-gray-50 dark:bg-gray-900 dark:text-white"
+                        class="bg-white border-b border-gray-200 text-gray-900 hover:bg-gray-800 dark:bg-gray-900 dark:text-white"
                     >
                         <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
                             <div class="flex items-center gap-2">
