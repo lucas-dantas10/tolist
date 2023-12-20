@@ -3,8 +3,9 @@ import { computed, ref } from 'vue';
 import store from '../../store';
 import router from '../../router/index.js';
 import Spinner from '../../components/Spinner/Spinner.vue';
+import { useDark } from "@vueuse/core";
 
-const errorMsg = ref('');
+const isDark = useDark();
 
 const forms = ref({
     email: '',
@@ -18,13 +19,6 @@ function submit() {
     store.dispatch('login', forms.value)
         .then(() => {
             router.push({name: 'app.home'});
-        })
-        .catch(({response}) => {
-            errorMsg.value = response.data.message;
-            store.commit('showToast', {
-                message: errorMsg.value,
-                type: 'error'
-            });
         });
 }
 
