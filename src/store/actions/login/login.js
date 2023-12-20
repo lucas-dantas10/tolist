@@ -1,4 +1,5 @@
 import axiosClient from '../../../axios';
+import store from '../../../store';
 
 export function login({commit, state}, user) {
     state.spinner.loading = true;
@@ -8,7 +9,12 @@ export function login({commit, state}, user) {
             commit('setToken', data.token);
             return data;
         })
-        .catch(({response}) => response)
+        .catch(({response}) => {
+            store.commit('showToast', {
+                message: response.data.message,
+                type: 'error'
+            });
+        })
         .finally(() => state.spinner.loading = false);
 }
 
