@@ -1,14 +1,16 @@
 <script setup>
-import { computed, onUpdated, ref } from "vue";
+import { computed, onUpdated, onMounted, ref } from "vue";
 import store from "../../store";
 
-const taskModel = ref({
-    id: props.task.id,
-    title: props.task.title,
-    description: props.task.description,
-    category: props.task.category,
-    priority: props.task.priority,
-    status: props.task.status,
+const taskModel = ref({});
+
+onMounted(() => {
+    taskModel.id = props.task.id;
+    taskModel.title = props.task.title;
+    taskModel.description = props.task.description;
+    taskModel.category = props.task.category;
+    taskModel.priority = props.task.priority;
+    taskModel.status = props.task.status;
 });
 
 const props = defineProps({
